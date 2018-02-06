@@ -1,7 +1,7 @@
 #--------------------------------------------------------
 # Library Creation
 #--------------------------------------------------------
-SET (LIBRARY_NAME Joystick_plugin)
+SET (LIBRARY_NAME JoystickController_plugin)
 SET (LIB_MAJOR 0)
 SET (LIB_MINOR 0)
 SET (LIB_RELEASE 1)

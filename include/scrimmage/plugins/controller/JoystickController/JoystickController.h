@@ -30,8 +30,13 @@
  *
  */
 
-#ifndef INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICK_JOYSTICK_H_
-#define INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICK_JOYSTICK_H_
+#ifndef INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICKCONTROLLER_JOYSTICKCONTROLLER_H_
+#define INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICKCONTROLLER_JOYSTICKCONTROLLER_H_
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <linux/joystick.h>
 
 #include <scrimmage/motion/Controller.h>
 
@@ -40,27 +45,22 @@
 #include <map>
 #include <string>
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <linux/joystick.h>
-
 namespace scrimmage {
 namespace controller {
 
-class Joystick : public scrimmage::Controller {
+class JoystickController : public scrimmage::Controller {
  public:
-    Joystick();
+    JoystickController();
+    ~JoystickController();
     virtual void init(std::map<std::string, std::string> &params);
     virtual bool step(double t, double dt);
 
  protected:
-    int joy_fd_;
+    int joy_fd_ = -1;
     int *axis_ = NULL;
     int num_of_axis_ = 0;
     int num_of_buttons_ = 0;
 	char *button_ = NULL;
-    char *name_of_joystick_[80];
 	struct js_event js_;
 
     int min_value = -32767;
@@ -70,4 +70,4 @@ class Joystick : public scrimmage::Controller {
 };
 } // namespace controller
 } // namespace scrimmage
-#endif // INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICK_JOYSTICK_H_
+#endif // INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICKCONTROLLER_JOYSTICKCONTROLLER_H_
