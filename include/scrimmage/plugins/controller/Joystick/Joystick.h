@@ -30,27 +30,44 @@
  *
  */
 
-#ifndef INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_FIXEDWING6DOFCONTROLLERPID_FIXEDWING6DOFCONTROLLERPID_H_
-#define INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_FIXEDWING6DOFCONTROLLERPID_FIXEDWING6DOFCONTROLLERPID_H_
+#ifndef INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICK_JOYSTICK_H_
+#define INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICK_JOYSTICK_H_
 
 #include <scrimmage/motion/Controller.h>
-#include <scrimmage/common/PID.h>
+
+#include <Eigen/Dense>
 
 #include <map>
 #include <string>
 
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <linux/joystick.h>
+
 namespace scrimmage {
 namespace controller {
-class FixedWing6DOFControllerPID : public Controller {
+
+class Joystick : public scrimmage::Controller {
  public:
+    Joystick();
     virtual void init(std::map<std::string, std::string> &params);
     virtual bool step(double t, double dt);
 
  protected:
-    scrimmage::PID heading_pid_;
-    scrimmage::PID alt_pid_;
-    scrimmage::PID vel_pid_;
+    int joy_fd_;
+    int *axis_ = NULL;
+    int num_of_axis_ = 0;
+    int num_of_buttons_ = 0;
+	char *button_ = NULL;
+    char *name_of_joystick_[80];
+	struct js_event js_;
+
+    int min_value = -32767;
+    int max_value = +32767;
+
+    bool print_js_values_ = false;
 };
 } // namespace controller
 } // namespace scrimmage
-#endif // INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_FIXEDWING6DOFCONTROLLERPID_FIXEDWING6DOFCONTROLLERPID_H_
+#endif // INCLUDE_SCRIMMAGE_PLUGINS_CONTROLLER_JOYSTICK_JOYSTICK_H_

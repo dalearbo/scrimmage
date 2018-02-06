@@ -57,14 +57,6 @@ namespace motion {
 namespace sc = scrimmage;
 namespace pl = std::placeholders;
 
-enum ControlParams {
-    THRUST = 0,
-    ELEVATOR,
-    AILERON,
-    RUDDER,
-    CONTROL_NUM_ITEMS
-};
-
 FixedWing6DOF::FixedWing6DOF() {
     Eigen::AngleAxisd aa(M_PI, Eigen::Vector3d::UnitX());
     rot_180_x_axis_ = Eigen::Quaterniond(aa);
@@ -230,7 +222,7 @@ bool FixedWing6DOF::init(std::map<std::string, std::string> &info,
 
 bool FixedWing6DOF::step(double time, double dt) {
     // Get control inputs
-    ctrl_u_ = std::static_pointer_cast<Controller>(parent_->controllers().back())->u();
+    ctrl_u_ = parent_->controllers().back()->output();
     thrust_ = ctrl_u_(THRUST);
     delta_elevator_ = ctrl_u_(ELEVATOR);
     delta_aileron_ = ctrl_u_(AILERON);

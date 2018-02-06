@@ -75,6 +75,8 @@ void FixedWing6DOFControllerPID::init(std::map<std::string, std::string> &params
     set_pid(heading_pid_, params["heading_pid"], true);
     set_pid(alt_pid_, params["alt_pid"], false);
     set_pid(vel_pid_, params["vel_pid"], false);
+
+    output_.resize(4);
 }
 
 bool FixedWing6DOFControllerPID::step(double t, double dt) {
@@ -98,12 +100,12 @@ bool FixedWing6DOFControllerPID::step(double t, double dt) {
     // Rudder dublet (TODO)
     if (t >= 2 && t <= 2.4) {
         cout << "----> 1" << endl;
-        u_ << 0, 0, 0, -0.26;
+        output_ << 0, 0, 0, -0.26;
     } else if (t >= 2.4 && t <= 2.8) {
         cout << "----> 2" << endl;
-        u_ << 0, 0, 0, 0.26;
+        output_ << 0, 0, 0, 0.26;
     } else {
-        u_ << 0, 0, 0, 0;
+        output_ << 0, 0, 0, 0;
     }
 #endif
 
@@ -111,12 +113,12 @@ bool FixedWing6DOFControllerPID::step(double t, double dt) {
     // Aileron dublet (TODO)
     if (t >= 2 && t <= 2.4) {
         cout << "----> 1" << endl;
-        u_ << 0, 0, -0.5, 0;
+        output_ << 0, 0, -0.5, 0;
     } else if (t >= 2.4 && t <= 2.8) {
         cout << "----> 2" << endl;
-        u_ << 0, 0, 0.5, 0;
+        output_ << 0, 0, 0.5, 0;
     } else {
-        u_ << 0, 0, 0, 0;
+        output_ << 0, 0, 0, 0;
     }
 #endif
 

@@ -72,6 +72,14 @@ class FixedWing6DOF : public scrimmage::MotionModel{
         MODEL_NUM_ITEMS
     };
 
+    enum Inputs {
+        THRUST = 0,
+        ELEVATOR,
+        AILERON,
+        RUDDER,
+        MODEL_NUM_INPUTS
+    };
+
     FixedWing6DOF();
 
     virtual std::tuple<int, int, int> version();
@@ -84,19 +92,12 @@ class FixedWing6DOF : public scrimmage::MotionModel{
 
     virtual void teleport(scrimmage::StatePtr &state);
 
-    class Controller : public scrimmage::Controller {
-     public:
-        virtual Eigen::Vector4d u() = 0;
-    };
-
-    void set_u(Eigen::Vector4d u) {ctrl_u_ = u;}
-
  protected:
     scrimmage::PID heading_pid_;
     scrimmage::PID alt_pid_;
     scrimmage::PID vel_pid_;
 
-    Eigen::Vector4d ctrl_u_;
+    Eigen::VectorXd ctrl_u_;
 
     Eigen::Matrix3d I_;
     Eigen::Matrix3d I_inv_;

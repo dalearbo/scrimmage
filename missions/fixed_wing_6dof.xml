@@ -63,7 +63,8 @@
     <heading>0</heading>
     
     <!--<controller>FixedWing6DOFControllerROS</controller>-->
-    <controller>FixedWing6DOFControllerPID</controller>
+    <!--<controller>FixedWing6DOFControllerPID</controller>-->
+    <controller print_raw_joystick_values="false">Joystick</controller>
     <motion_model write_csv="true">FixedWing6DOF</motion_model>
     <visual_model>cessna</visual_model>    
     <autonomy>Control3D</autonomy>    
