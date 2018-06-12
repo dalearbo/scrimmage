@@ -117,7 +117,6 @@ class External {
 #ifdef ROSCPP_ROS_H
 
  public:
-    template <class ScType, class Sc2Ros>
     template <class ScType, class Sc2Ros, class CallbackFunc>
     void pub_cb(std::string network_name, std::string topic_name,
                 Sc2Ros sc2ros, CallbackFunc func) {
