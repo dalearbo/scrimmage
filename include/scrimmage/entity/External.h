@@ -118,7 +118,7 @@ class External {
 
  public:
     template <class ScType, class Sc2Ros, class CallbackFunc>
-    void pub_cb(std::string network_name, std::string topic_name,
+    void pub_cb_general(std::string network_name, std::string topic_name,
                 Sc2Ros sc2ros, CallbackFunc func) {
 
         boost::optional<std::list<NetworkDevicePtr>> pubs =
@@ -150,7 +150,7 @@ class External {
 
         auto ros_pub_ptr = std::make_shared<ros::Publisher>(ros_pub);
         auto callback = [&](auto foo){ros_pub_ptr->publish(foo);};
-        pub_cb(network_name, topic_name, sc2ros, callback);
+        pub_cb_general(network_name, topic_name, sc2ros, callback);
     }
 
     template <class RosType, class Ros2Sc>
